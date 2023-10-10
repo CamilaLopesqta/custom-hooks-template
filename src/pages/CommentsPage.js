@@ -1,31 +1,19 @@
-import { useState, useEffect } from "react";
-import { BASE_URL } from "../constants/constants";
-import axios from "axios";
 import {Title,PostContainer } from '../style'
 import { Card } from '../components/Card/Card'
-
+import { useCapturarPostagem } from '../hooks/useCapturarPostagem'
+import { useRequestData } from '../hooks/useRequestData'
+import { BASE_URL } from '../constants/constants'
 
 const  CommentsPage = () => {
-  const [postagens, setPostagens] = useState([]);
-
-
-  useEffect(() => {
-    axios
-      .get(`${BASE_URL}comments`)
-      .then((response) => {
-        setPostagens(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+//const [posts] = useCapturarPostagem()
+  const [posts] = useRequestData([], `${BASE_URL}comments`)
 
   return (
     <div>
       <Title>Comentários dos usuários</Title>
       <PostContainer>
 
-      {postagens.map((post) => {
+      {posts.map((post) => {
         //console.log(post);
         return(
           <Card 
