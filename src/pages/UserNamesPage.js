@@ -1,29 +1,21 @@
-import { useState, useEffect } from "react";
-import { BASE_URL } from "../constants/constants";
-import axios from "axios";
 import {Title,NameContainer } from '../style'
 import { Card } from '../components/Card/Card'
+import { useCapturarNome } from '../hooks/useCapturarNome';
+import { useRequestData } from '../hooks/useRequestData';
+import { BASE_URL } from '../constants/constants';
 
 
 const UserNamesPage = () => {
-  const [nomeUsuarios, setNomeUsuarios] = useState([]);
- 
-
-  useEffect(() => {
-    axios
-      .get(`${BASE_URL}users`)
-      .then((response) => {
-        setNomeUsuarios(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+  //const nomeUsuarios = useCapturarNome()
+const [nomeUsuarios, error, isLoading] = useRequestData([], `${BASE_URL}users`)
 
   return (
     <div>
       <Title>Nomes dos usuários</Title>
       <NameContainer>
+        {isLoading && <p>Carregando ...</p>}
+        {!isLoading && error && <p>Ocorreu um erro. Tente novamente amis tarde.</p>}
+        {!isLoading && nomeUsuarios && nomeUsuarios.length === 0 && <p>Lista vazia.</p>}
         {nomeUsuarios.map((usuario) => {
           return(
           <Card 
