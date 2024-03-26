@@ -3,8 +3,7 @@ import { BASE_URL } from "../constants/constants";
 import axios from "axios";
 
 export const useCapturarPostagem = () => {
-
-const [postagens, setPostagens] = useState([]);
+  const [postagens, setPostagens] = useState([]);
 
   useEffect(() => {
     axios
@@ -16,6 +15,5 @@ const [postagens, setPostagens] = useState([]);
         console.log(error);
       });
   }, []);
-return [postagens]
-
-}
+  return [postagens];
+};
